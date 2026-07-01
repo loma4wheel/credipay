@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redireccionando...</title>
+    <title>Abriendo Inova Guard...</title>
 </head>
 <body>
 
-    <!-- Mensaje de respaldo por si el teléfono es muy lento -->
     <p style="text-align: center; font-family: Arial, sans-serif; margin-top: 50px;">
-        Abriendo la aplicación Inova Guard... <br><br>
-        <small>Si no abre automáticamente, puedes cerrar esta ventana.</small>
+        Abriendo la aplicación Inova Guard en tu dispositivo... <br><br>
+        <small>Si no abre automáticamente en unos segundos, puedes cerrar esta ventana.</small>
     </p>
 
     <script>
         window.onload = function() {
-            // Dirección que fuerza la apertura de la app en Android
+            // Se incluye el Package Name exacto (inova.guard.app) para identificar tu app
             var intentUrl = "intent://#Intent;package=inova.guard.app;scheme=android-app;end";
             
-            // Ejecuta la redirección automática de inmediato al cargar la página
+            // Fuerza la redirección automática inmediata
             window.location.replace(intentUrl);
         };
     </script>
