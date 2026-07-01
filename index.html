@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consola Trackmaster</title>
+    <title>Iniciando AppSheet Trackmaster...</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f4f6f9; margin: 0; }
         .caja { background: white; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
@@ -14,23 +14,13 @@
 
 <div class="caja">
     <h2>Sistema Trackmaster</h2>
-    <p>Presiona el botón para forzar el arranque directo del servicio local instalado.</p>
+    <p>Presiona el botón para despertar el paquete local instalado en este dispositivo.</p>
     
-    <!-- Este botón ataca la ruta exacta del componente de la app en la memoria -->
-    <button class="boton-fuerza" onclick="abrirComponenteLocal()">
-        Iniciar Aplicación
-    </button>
+    <!-- ENLACE QUIRÚRGICO DIRECTO AL PROCESADOR DE ANDROID -->
+    <a class="boton-fuerza" href="intent://#Intent;action=android.intent.action.VIEW;package=x1Trackmaster.x1Trackmaster;component=x1Trackmaster.x1Trackmaster/x1Trackmaster.x1Trackmaster.activities.MainActivity;S.browser_fallback_url=javascript:void(0);end">
+        ABRIR APLICACIÓN LOCAL
+    </a>
 </div>
-
-<script>
-function abrirComponenteLocal() {
-    // Sintaxis estricta combinando Paquete y Actividad para saltarse Google Play por completo
-    var intentUrl = "intent://#Intent;action=android.intent.action.VIEW;package=x1Trackmaster.x1Trackmaster;component=x1Trackmaster.x1Trackmaster/x1Trackmaster.x1Trackmaster.activities.MainActivity;S.browser_fallback_url=javascript:void(0);end";
-    
-    // Ejecuta la orden en el procesador del teléfono
-    window.location.replace(intentUrl);
-}
-</script>
 
 </body>
 </html>
