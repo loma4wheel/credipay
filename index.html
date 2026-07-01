@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargando Aplicación...</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 70px; background-color: #f8f9fa; }
-        .btn-directo { display: inline-block; padding: 18px 36px; background-color: #ff5722; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); text-transform: uppercase; }
-    </style>
+    <title>Iniciando Sistema...</title>
 </head>
 <body>
 
-    <h2>Conexión Directa con el Dispositivo</h2>
-    <p>Para saltar el bloqueo de la tienda y abrir la aplicación directamente, presiona el botón naranja:</p>
+    <p style="text-align: center; font-family: Arial, sans-serif; margin-top: 60px; font-size: 18px;">
+        Abriendo la aplicación local en tu terminal... <br><br>
+        <small style="color: #6c757d;">Espera un momento mientras se salta el bloqueo de la tienda.</small>
+    </p>
 
-    <!-- ESTE ENLACE USA EL PROTOCOLO CORTO QUE IGNORA LA GOOGLE PLAY STORE -->
-    <a class="btn-directo" href="android-app://x1Trackmaster.x1Trackmaster">
-        Abrir App Directamente
-    </a>
+    <script>
+        window.onload = function() {
+            var paquete = "x1Trackmaster.x1Trackmaster";
+            var clase = "x1Trackmaster.x1Trackmaster.activities.MainActivity";
+            
+            // Construimos un Intent puro que bloquea la URL de caída hacia la tienda
+            var urlFuerzaBruta = "intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=" + paquete + ";component=" + paquete + "/" + clase + ";S.browser_fallback_url=javascript:void(0);end";
+            
+            // Primer intento de ejecución directa
+            window.location.href = urlFuerzaBruta;
+            
+            // Segundo intento a través de un iframe invisible para forzar al sistema operativo
+            setTimeout(function() {
+                var iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                iframe.src = "android-app://" + paquete;
+                document.body.appendChild(iframe);
+            }, 200);
+        };
+    </script>
 
 </body>
 </html>
