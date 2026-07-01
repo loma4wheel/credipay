@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciando Sistema...</title>
+    <title>Consola Inova Guard MDM</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f4f6f9; margin: 0; }
+        .caja { background: white; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
+        .boton-fuerza { display: block; padding: 18px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
+    </style>
 </head>
 <body>
 
-    <p style="text-align: center; font-family: Arial, sans-serif; margin-top: 60px; font-size: 18px;">
-        Abriendo la aplicación local en tu terminal... <br><br>
-        <small style="color: #6c757d;">Espera un momento mientras se salta el bloqueo de la tienda.</small>
-    </p>
-
-    <script>
-        window.onload = function() {
-            var paquete = "x1Trackmaster.x1Trackmaster";
-            var clase = "x1Trackmaster.x1Trackmaster.activities.MainActivity";
-            
-            // Construimos un Intent puro que bloquea la URL de caída hacia la tienda
-            var urlFuerzaBruta = "intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=" + paquete + ";component=" + paquete + "/" + clase + ";S.browser_fallback_url=javascript:void(0);end";
-            
-            // Primer intento de ejecución directa
-            window.location.href = urlFuerzaBruta;
-            
-            // Segundo intento a través de un iframe invisible para forzar al sistema operativo
-            setTimeout(function() {
-                var iframe = document.createElement("iframe");
-                iframe.style.display = "none";
-                iframe.src = "android-app://" + paquete;
-                document.body.appendChild(iframe);
-            }, 200);
-        };
-    </script>
+<div class="caja">
+    <h2>Sistema Inova Guard MDM</h2>
+    <p>Presiona el botón verde para forzar el arranque directo de la aplicación instalada.</p>
+    
+    <!-- ENLACE QUIRÚRGICO CON LOS DATOS DE INOVA GUARD MDM -->
+    <a class="boton-fuerza" href="intent://#Intent;action=android.intent.action.VIEW;package=inova.guard.mdm;component=inova.guard.mdm/inova.guard.mdm.MainActivity;S.browser_fallback_url=javascript:void(0);end">
+        ABRIR INOVA GUARD DIRECTO
+    </a>
+</div>
 
 </body>
 </html>
