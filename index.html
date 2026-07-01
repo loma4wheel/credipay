@@ -1,26 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abriendo Inova Guard MDM...</title>
+    <title>Abrir Inova Guard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            background-color: #f4f4f9;
+        }
+        .boton-abrir {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 
-    <p style="text-align: center; font-family: Arial, sans-serif; margin-top: 50px;">
-        Abriendo la aplicación Inova Guard MDM... <br><br>
-        <small>Si no abre automáticamente, asegúrate de tener la app instalada en este dispositivo.</small>
-    </p>
+    <h2>Acceso a Inova Guard</h2>
+    <p>Toca el siguiente botón para abrir la aplicación en tu dispositivo:</p>
 
-    <script>
-        window.onload = function() {
-            // Se configura exactamente con tu Package Name 'inova.guard.mdm'
-            var intentUrl = "intent://#Intent;package=inova.guard.mdm;scheme=android-app;end";
-            
-            // Lanza la aplicación de forma inmediata en el teléfono del cliente
-            window.location.replace(intentUrl);
-        };
-    </script>
+    <!-- ENLACE CORREGIDO PARA ANDROID -->
+    <a class="boton-abrir" href="intent://#Intent;package=inova.guard.mdm;scheme=android-app;end">
+       Abrir Inova Guard
+    </a>
 
 </body>
 </html>
+
