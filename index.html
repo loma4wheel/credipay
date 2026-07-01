@@ -1,3 +1,27 @@
-<a href="intent://#Intent;scheme=package;package=inova.guard.app;end">
-   Abrir Inova Guard en este teléfono
-</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redireccionando...</title>
+</head>
+<body>
+
+    <!-- Mensaje de respaldo por si el teléfono es muy lento -->
+    <p style="text-align: center; font-family: Arial, sans-serif; margin-top: 50px;">
+        Abriendo la aplicación Inova Guard... <br><br>
+        <small>Si no abre automáticamente, puedes cerrar esta ventana.</small>
+    </p>
+
+    <script>
+        window.onload = function() {
+            // Dirección que fuerza la apertura de la app en Android
+            var intentUrl = "intent://#Intent;package=inova.guard.app;scheme=android-app;end";
+            
+            // Ejecuta la redirección automática de inmediato al cargar la página
+            window.location.replace(intentUrl);
+        };
+    </script>
+
+</body>
+</html>
