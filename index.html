@@ -3,21 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abriendo Aplicación...</title>
+    <title>Abriendo Inova Guard MDM...</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f4f4f9; }
-        .boton { display: inline-block; padding: 15px 30px; font-size: 18px; color: white; background-color: #ff5722; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f6f9;
+            padding: 50px 20px;
+        }
+        .caja {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .boton {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #28a745; /* Verde de activación */
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Conectando con la Aplicación</h2>
-    <p>Presiona el botón para forzar la apertura en tu celular:</p>
-
-    <!-- ESTE CÓDIGO ROMPE EL REDIRECCIONAMIENTO A PLAY STORE -->
-    <a class="boton" href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.facebook.katana;end">
-       ABRIR APLICACIÓN DIRECTA
-    </a>
+    <div class="caja">
+        <h2>Control de Dispositivo</h2>
+        <p>Presiona el botón verde para abrir la aplicación Inova Guard MDM en este teléfono:</p>
+        
+        <!-- INTENT LIMPIO: Al no llevar el esquema web de Google, Android busca localmente -->
+        <a class="boton" href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=inova.guard.mdm;end">
+            ABRIR INOVA GUARD NOW
+        </a>
+    </div>
 
 </body>
 </html>
