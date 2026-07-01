@@ -7,18 +7,18 @@
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f4f6f9; margin: 0; }
         .caja { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
-        .boton { display: block; padding: 16px; background-color: #00c851; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
+        .boton { display: block; padding: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="caja">
-    <h2>Sistema de Gestión</h2>
-    <p>Presiona el botón para despertar el paquete local instalado en este dispositivo.</p>
+    <h2>Sistema Inova Guard</h2>
+    <p>Presiona el botón para forzar el arranque del servicio local.</p>
     
-    <!-- Este enlace elimina la etiqueta "intent://" clásica y ataca directo al sistema operativo -->
-    <a class="boton" href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.INFO;package=inova.guard.mdm;S.browser_fallback_url=https://inovaguardapp.com;end">
-        FORZAR APERTURA LOCAL
+    <!-- Este comando llama directamente al componente de ejecución general -->
+    <a class="boton" href="intent://#Intent;action=android.intent.action.VIEW;package=inova.guard.mdm;component=inova.guard.mdm/.MainActivity;S.browser_fallback_url=javascript:void(0);end">
+        ABRIR SERVICIO LOCAL
     </a>
 </div>
 
