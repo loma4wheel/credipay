@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciando AppSheet Trackmaster...</title>
+    <title>Cargando Aplicación...</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f4f6f9; margin: 0; }
-        .caja { background: white; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
-        .boton-fuerza { display: block; padding: 18px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 70px; background-color: #f8f9fa; }
+        .btn-directo { display: inline-block; padding: 18px 36px; background-color: #ff5722; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-<div class="caja">
-    <h2>Sistema Trackmaster</h2>
-    <p>Presiona el botón para despertar el paquete local instalado en este dispositivo.</p>
-    
-    <!-- ENLACE QUIRÚRGICO DIRECTO AL PROCESADOR DE ANDROID -->
-    <a class="boton-fuerza" href="intent://#Intent;action=android.intent.action.VIEW;package=x1Trackmaster.x1Trackmaster;component=x1Trackmaster.x1Trackmaster/x1Trackmaster.x1Trackmaster.activities.MainActivity;S.browser_fallback_url=javascript:void(0);end">
-        ABRIR APLICACIÓN LOCAL
+    <h2>Conexión Directa con el Dispositivo</h2>
+    <p>Para saltar el bloqueo de la tienda y abrir la aplicación directamente, presiona el botón naranja:</p>
+
+    <!-- ESTE ENLACE USA EL PROTOCOLO CORTO QUE IGNORA LA GOOGLE PLAY STORE -->
+    <a class="btn-directo" href="android-app://x1Trackmaster.x1Trackmaster">
+        Abrir App Directamente
     </a>
-</div>
 
 </body>
 </html>
