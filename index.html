@@ -3,47 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Administrador MDM</title>
+    <title>Consola Inova Guard MDM</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f1f3f5; margin: 0; }
-        .caja-sistema { background: white; padding: 40px 20px; border-radius: 14px; max-width: 380px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .btn-mecanico { display: block; padding: 18px; background-color: #d32f2f; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 25px; text-transform: uppercase; border: none; width: 100%; cursor: pointer; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f4f6f9; margin: 0; }
+        .caja { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
+        .boton { display: block; padding: 16px; background-color: #00c851; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="caja-sistema">
-    <h2>Consola de Dispositivo</h2>
-    <p>Para sincronizar o reactivar la aplicación Inova Guard MDM en este teléfono, presiona el botón de abajo.</p>
+<div class="caja">
+    <h2>Sistema de Gestión</h2>
+    <p>Presiona el botón para despertar el paquete local instalado en este dispositivo.</p>
     
-    <!-- Al presionar este botón, se ejecuta el script de salto local sin pasar por Play Store -->
-    <button class="btn-mecanico" onclick="abrirPaqueteLocal()">
-        Abrir Aplicación Local
-    </button>
+    <!-- Este enlace elimina la etiqueta "intent://" clásica y ataca directo al sistema operativo -->
+    <a class="boton" href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.INFO;package=inova.guard.mdm;S.browser_fallback_url=https://inovaguardapp.com;end">
+        FORZAR APERTURA LOCAL
+    </a>
 </div>
-
-<script>
-function abrirPaqueteLocal() {
-    var pkgName = "inova.guard.mdm";
-    
-    // TRUCO 1: Intentamos abrir mediante el disparador nativo de la API de Android
-    var intentDirecto = "intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=" + pkgName + ";S.browser_fallback_url=javascript:void(0);end";
-    
-    // TRUCO 2: Intentamos abrir llamando al componente directo de la app por esquema plano
-    var esquemaPlano = "android-app://" + pkgName;
-
-    // Ejecución forzada en el navegador del usuario
-    window.location.href = intentDirecto;
-
-    // Respaldo inmediato por si el navegador intenta desviar a la Play Store
-    setTimeout(function() {
-        var iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = esquemaPlano;
-        document.body.appendChild(iframe);
-    }, 100);
-}
-</script>
 
 </body>
 </html>
