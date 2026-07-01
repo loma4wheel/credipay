@@ -3,24 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consola Inova Guard MDM</title>
+    <title>Iniciando Inova Guard MDM...</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f4f6f9; margin: 0; }
-        .caja { background: white; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
-        .boton-fuerza { display: block; padding: 18px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 70px; background-color: #f4f6f9; }
+        .tarjeta { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 350px; margin: 0 auto; }
+        .btn-bloqueo { display: block; padding: 16px; background-color: #d32f2f; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
     </style>
 </head>
 <body>
 
-<div class="caja">
-    <h2>Sistema Inova Guard MDM</h2>
-    <p>Presiona el botón verde para forzar el arranque directo de la aplicación instalada.</p>
+<div class="tarjeta">
+    <h2>Consola de Dispositivo</h2>
+    <p>Presiona el botón para forzar la apertura local. Si el sistema parpadea, la app ya habrá recibido la orden.</p>
     
-    <!-- ENLACE QUIRÚRGICO CON LOS DATOS DE INOVA GUARD MDM -->
-    <a class="boton-fuerza" href="intent://#Intent;action=android.intent.action.VIEW;package=inova.guard.mdm;component=inova.guard.mdm/inova.guard.mdm.MainActivity;S.browser_fallback_url=javascript:void(0);end">
-        ABRIR INOVA GUARD DIRECTO
-    </a>
+    <!-- El botón ejecuta una función de JavaScript que rompe el bucle de Google Play -->
+    <button class="btn-bloqueo" onclick="forzarAperturaMDM()">
+        FORZAR EJECUCIÓN
+    </button>
 </div>
+
+<script>
+function forzarAperturaMDM() {
+    // 1. Ruta interna exacta del componente que extrajiste
+    var intentUrl = "intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=inova.guard.mdm;component=inova.guard.mdm/inova.guard.mdm.MainActivity;S.browser_fallback_url=javascript:void(0);end";
+    
+    // 2. Registramos el momento exacto en el que el usuario hace clic
+    var tiempoInicial = Date.now();
+    
+    // 3. Enviamos la orden de apertura al procesador de Android
+    window.location.href = intentUrl;
+    
+    // 4. TRUCO ANTIBLOQUEO: Monitoreamos los siguientes 1.5 segundos. 
+    // Si Android intenta salir del navegador hacia Google Play, congelamos la ventana.
+    setTimeout(function() {
+        var tiempoTranscurrido = Date.now() - tiempoInicial;
+        
+        // Si el tiempo transcurrido es menor a 2 segundos, significa que el navegador 
+        // no logró quedarse dentro de la app instalada y está intentando abrir Google Play.
+        if (tiempoTranscurrido < 2000) {
+            // Reemplazamos la página actual por una pantalla vacía para destruir la ruta de la tienda
+            window.location.replace("about:blank");
+            
+            // Si el navegador lo permite, intentamos cerrar la pestaña para dejar al usuario dentro de la app que parpadeó
+            window.close();
+        }
+    }, 1500);
+}
+</script>
 
 </body>
 </html>
