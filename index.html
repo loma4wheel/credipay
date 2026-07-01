@@ -3,79 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciando Aplicación...</title>
+    <title>Abriendo Aplicación...</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            background-color: #f0f2f5;
-            color: #1c1e21;
-            margin: 0;
-            padding: 50px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 80vh;
-        }
-        .contenedor {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 400px;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #1877f2;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .boton-forzar {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 12px 24px;
-            background-color: #1877f2;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f4f4f9; }
+        .boton { display: inline-block; padding: 15px 30px; font-size: 18px; color: white; background-color: #ff5722; text-decoration: none; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="contenedor">
-        <h2>Abriendo Aplicación</h2>
-        <p>Por favor espera un momento mientras te redirigimos al sistema...</p>
-        <div class="loader"></div>
-        
-        <!-- El botón de respaldo usa el Intent de 'fuerza bruta' que no pasa por Play Store -->
-        <a class="boton-forzar" href="intent://#Intent;action=android.intent.action.VIEW;package=com.facebook.katana;scheme=android-app;end">
-            Entrar a la App ahora
-        </a>
-    </div>
+    <h2>Conectando con la Aplicación</h2>
+    <p>Presiona el botón para forzar la apertura en tu celular:</p>
 
-    <script>
-        // Formato con acción VIEW integrada para saltar la tienda
-        var intentUrl = "intent://#Intent;action=android.intent.action.VIEW;package=com.facebook.katana;scheme=android-app;end";
-
-        // Intento 1: Ejecución automática al cargar la página (milisegundo cero)
-        window.location.href = intentUrl;
-
-        // Intento 2: Redirección de respaldo por si el navegador tardó en renderizar
-        setTimeout(function() {
-            window.location.replace(intentUrl);
-        }, 500);
-    </script>
+    <!-- ESTE CÓDIGO ROMPE EL REDIRECCIONAMIENTO A PLAY STORE -->
+    <a class="boton" href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.facebook.katana;end">
+       ABRIR APLICACIÓN DIRECTA
+    </a>
 
 </body>
 </html>
