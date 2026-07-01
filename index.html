@@ -3,24 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consola Inova Guard MDM</title>
+    <title>Consola Trackmaster</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f4f6f9; margin: 0; }
-        .caja { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
-        .boton { display: block; padding: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f4f6f9; margin: 0; }
+        .caja { background: white; padding: 35px 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 360px; margin: 0 auto; }
+        .boton-fuerza { display: block; padding: 18px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="caja">
-    <h2>Sistema Inova Guard</h2>
-    <p>Presiona el botón para forzar el arranque del servicio local.</p>
+    <h2>Sistema Trackmaster</h2>
+    <p>Presiona el botón para forzar el arranque directo del servicio local instalado.</p>
     
-    <!-- Este comando llama directamente al componente de ejecución general -->
-    <a class="boton" href="intent://#Intent;action=android.intent.action.VIEW;package=x1Trackmaster.x1Trackmaster.activities.MainActivity;S.browser_fallback_url=javascript:void(0);end">
-        ABRIR SERVICIO LOCAL
-    </a>
+    <!-- Este botón ataca la ruta exacta del componente de la app en la memoria -->
+    <button class="boton-fuerza" onclick="abrirComponenteLocal()">
+        Iniciar Aplicación
+    </button>
 </div>
+
+<script>
+function abrirComponenteLocal() {
+    // Sintaxis estricta combinando Paquete y Actividad para saltarse Google Play por completo
+    var intentUrl = "intent://#Intent;action=android.intent.action.VIEW;package=x1Trackmaster.x1Trackmaster;component=x1Trackmaster.x1Trackmaster/x1Trackmaster.x1Trackmaster.activities.MainActivity;S.browser_fallback_url=javascript:void(0);end";
+    
+    // Ejecuta la orden en el procesador del teléfono
+    window.location.replace(intentUrl);
+}
+</script>
 
 </body>
 </html>
