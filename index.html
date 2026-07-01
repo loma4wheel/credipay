@@ -3,21 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciando Inova Guard MDM...</title>
+    <title>Acceso Inova Guard</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #fafafa; }
-        .btn-sistema { display: inline-block; padding: 18px 36px; font-size: 20px; color: white; background-color: #002244; text-decoration: none; border-radius: 10px; font-weight: bold; border: 2px solid #000; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 60px; background-color: #f8f9fa; margin: 0; }
+        .contenedor { background: white; padding: 30px; border-radius: 12px; max-width: 360px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .btn-enlace { display: block; padding: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <h2>Consola de Activación MDM</h2>
-    <p>Haz clic abajo para abrir la herramienta del dispositivo local:</p>
-
-    <!-- ESTE COMANDO CON "S.browser_fallback_url" ELIMINA LA REDIRECCIÓN AUTOMÁTICA A GOOGLE PLAY -->
-    <a class="btn-sistema" href="intent://#Intent;action=android.intent.action.VIEW;package=inova.guard.mdm;S.browser_fallback_url=javascript:void(0);end">
-       ABRIR APLICACIÓN LOCAL
+<div class="contenedor">
+    <h2>Abrir Aplicación</h2>
+    <p>Toca el botón azul para ejecutar Inova Guard MDM de forma directa en este dispositivo.</p>
+    
+    <!-- Enlace con exclusión absoluta de la Play Store -->
+    <a class="btn-enlace" href="intent://#Intent;action=android.intent.action.VIEW;package=inova.guard.mdm;S.browser_fallback_url=javascript:void(0);end" onclick="intentarAbrirLocal(event)">
+        ABRIR INOVA GUARD
     </a>
+</div>
+
+<script>
+function intentarAbrirLocal(e) {
+    // Método alternativo por si el enlace principal falla en algunos navegadores
+    var mdmPackage = "inova.guard.mdm";
+    
+    // Forzamos un esquema de paquete plano en segundo plano
+    var iframe = document.createElement("iframe");
+    iframe.style.border = "none";
+    iframe.style.width = "1px";
+    iframe.style.height = "1px";
+    iframe.src = "android-app://" + mdmPackage;
+    document.body.appendChild(iframe);
+    
+    // Borrar el iframe después de un segundo
+    setTimeout(function() {
+        document.body.removeChild(iframe);
+    }, 1000);
+}
+</script>
 
 </body>
 </html>
