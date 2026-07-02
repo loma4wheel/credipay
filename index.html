@@ -3,53 +3,1163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciando Inova Guard MDM...</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 70px; background-color: #f4f6f9; }
-        .tarjeta { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 350px; margin: 0 auto; }
-        .btn-bloqueo { display: block; padding: 16px; background-color: #d32f2f; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; margin-top: 20px; text-transform: uppercase; cursor: pointer; border: none; width: 100%; }
-    </style>
-</head>
-<body>
+    <title>Cotizador CrediPay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="tarjeta">
-    <h2>Consola de Dispositivo</h2>
-    <p>Presiona el botón para forzar la apertura local. Si el sistema parpadea, la app ya habrá recibido la orden.</p>
+    <link rel="icon" type="image/png" sizes="512x512" href="./img/favicon-512x512.png?v=13">
+    <link rel="apple-touch-icon" href="./img/favicon-512x512.png?v=13">
     
-    <!-- El botón ejecuta una función de JavaScript que rompe el bucle de Google Play -->
-    <button class="btn-bloqueo" onclick="forzarAperturaMDM()">
-        FORZAR EJECUCIÓN
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
+    .card { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.1); }
+    
+
+
+    @media print {
+
+    /* 🔥 ACTIVAR COLORES EN TODA LA PÁGINA */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* ❌ Ocultar lo innecesario */
+    .no-print, 
+    #btn-volver, 
+    #btn-crear, 
+    #form-parametros, 
+    header p, 
+    .bi {
+        display: none !important;
+    }
+
+    @page {
+        margin: 0.8cm;
+    }
+
+    body { 
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 10pt;
+        /* ❌ NO fuerces background ni color */
+    }
+
+    /* 🔥 CONTENEDOR */
+    .max-w-6xl { 
+        max-width: 100% !important; 
+        margin: 0 !important; 
+    }
+
+    /* 🔥 HEADER */
+    header { 
+        margin-bottom: 8px !important; 
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+    }
+
+    h1 { 
+        font-size: 13pt !important; 
+        margin: 0 !important; 
+        text-transform: uppercase;
+    }
+
+    /* 🔥 DASHBOARD (NO TOCAR COLORES) */
+    .grid-cols-2.md\:grid-cols-4,
+    .grid-cols-1.md\:grid-cols-4 {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .grid-cols-2.md\:grid-cols-4 > div,
+    .grid-cols-1.md\:grid-cols-4 > div {
+        width: 24% !important;
+        padding: 6px !important;
+        border-radius: 4px !important;
+        text-align: center;
+
+        /* 🔥 CLAVE: mantener colores originales */
+        background: inherit !important;
+        color: inherit !important;
+        border: 1px solid #0f38bd !important;
+    }
+
+    /* 📊 TABLA */
+    table { 
+        width: 100% !important; 
+        border-collapse: collapse !important;
+        font-size: 8pt !important; 
+    }
+
+    th { 
+        background: #e8eaec !important; 
+        border: 1px solid #ccc !important;
+        padding: 4px !important;
+    }
+
+    td { 
+        border: 1px solid #c0bcbc !important; 
+        padding: 4px !important;
+    }
+
+    tr { page-break-inside: avoid; }
+}
+</style>
+
+</head>
+<body class="p-4 md:p-8">
+
+<!-- 🖼️ CONTENEDOR DEL LOGO -->
+    <div class="flex justify-center mb-6">
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <!-- Reemplaza src con la ruta de tu logo -->
+            <img src="img/logo.jpg" alt="Logo Empresa" class="h-20 w-auto object-contain">
+        </div>
+    </div>
+
+    <!-- BOTONES DE NAVEGACIÓN -->
+    
+<!--    <div class="max-w-6xl mx-auto flex justify-end gap-3 mb-6 no-print">
+        <a href="{{ route('admin.prestamos.create') }}" id="btn-crear"
+        class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-md transition-all text-sm">
+            <i class="bi bi-plus-circle me-2"></i> Crear Préstamo
+        </a>
+        <a href="{{ route('admin.prestamos.index') }}" id="btn-volver"
+        class="inline-flex items-center px-4 py-2 bg-[#0164fe] hover:bg-[#0152d1] text-white font-bold rounded-lg shadow-md transition-all text-sm">
+            <i class="bi bi-arrow-left-circle me-2"></i> Volver al Sistema
+        </a>
+    </div>
+-->
+    
+      <div class="max-w-6xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-gray-800">Resumen del Financiamiento</h1>
+            <p class="text-gray-500">Documento informativo de plan de pagos proyectado</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+
+            <!-- FORMULARIO DE PARÁMETROS -->
+            <div id="form-parametros" class="card p-6 h-fit no-print">
+                <h2 class="text-xl font-semibold mb-2 flex items-center justify-center text-gray-700">
+                    <i class="bi bi-sliders2-vertical me-2 text-[#0164fe]"></i> Datos de la Solicitud
+
+                <h2 class="text-xs font-semibold mb-6 flex items-center justify-center text-red-600 no-print">
+                <i class="bi bi-sliders2-vertical me-2"></i>Presiona Tecla F5 para Limpiar los Resultados</h2>
+
+   <div class="mt-3 text-right">
+    <button id="btnActualizar"
+        onclick="location.reload()"
+        class="px-1 py-1 rounded bg-blue-600 text-white">
+        Limpiar
     </button>
+    </div>
+
+                    
+<div class="space-y-2">
+    <label class="block text-sm font-semibold text-gray-600">Nombre del Producto</label>
+    <div class="relative">
+    <input type="text" id="nombre_producto" placeholder="Buscar producto..." autocomplete="off" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-green-100 text-[14px]">
+    <!-- 🔥 DROPDOWN -->
+    <div id="dropdown-productos"
+        class="absolute z-50 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-60 overflow-y-auto hidden">
+    </div>
 </div>
 
-<script>
-function forzarAperturaMDM() {
-    // 1. Ruta interna exacta del componente que extrajiste
-    var intentUrl = "intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=inova.guard.mdm;component=inova.guard.mdm/inova.guard.mdm.MainActivity;S.browser_fallback_url=javascript:void(0);end";
-    
-    // 2. Registramos el momento exacto en el que el usuario hace clic
-    var tiempoInicial = Date.now();
-    
-    // 3. Enviamos la orden de apertura al procesador de Android
-    window.location.href = intentUrl;
-    
-    // 4. TRUCO ANTIBLOQUEO: Monitoreamos los siguientes 1.5 segundos. 
-    // Si Android intenta salir del navegador hacia Google Play, congelamos la ventana.
-    setTimeout(function() {
-        var tiempoTranscurrido = Date.now() - tiempoInicial;
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600">Precio del Producto</label>
+                        <div class="relative mt-1">
+                            <span class="absolute left-3 top-2 text-gray-400">$</span>
+                            <input type="number" id="monto" class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-yellow-100" value=""  placeholder="Monto">
+                        
+                            <h2 class="text-xs font-semibold mb-6 flex items-center justify-center text-blue-600">
+                            <i class="bi bi-sliders2-vertical me-2"></i>Celulares, Tablets y TV llevan licencia de RD$500.00</h2>
+                        </div>
+
+<div class="flex items-center gap-2 mt-2">
+    <input type="checkbox" id="checkLicencia" class="w-4 h-4">
+    <label for="checkLicencia" class="text-sm text-gray-600">
+        Agregar Licencia (RD$500.00)
+    </label>
+</div>
+
+<div id="contenedorLicencia" class="mt-3 ">
+    <label class="block text-sm font-semibold text-gray-600 flex items-center justify-center">Precio del Producto con Licencia</label>
+    <input type="number" id="precioConLicencia"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:ring-2 focus:ring-blue-500 outline-none bg-blue-100"
+        readonly>
         
-        // Si el tiempo transcurrido es menor a 2 segundos, significa que el navegador 
-        // no logró quedarse dentro de la app instalada y está intentando abrir Google Play.
-        if (tiempoTranscurrido < 2000) {
-            // Reemplazamos la página actual por una pantalla vacía para destruir la ruta de la tienda
-            window.location.replace("about:blank");
+</div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600">Inicial Minimo (30%)</label>
+                            <input type="number" id="inicial" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-orange-200" value="" placeholder="Inicial">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600">Tasa Mensual (%)</label>
+                            <input type="number" id="tasa" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-amber-50"" value="10" step="0.01">
+                    </div>
+
+                        <!-- Este div ahora ocupará el ancho de los dos anteriores juntos -->
+                        <div class="col-span-2">
+                        <label class="block text-sm font-semibold text-gray-600 whitespace-nowrap">Accesorios</label>
+                        <input type="number" id="accesorios" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-rose-100" value="" step="0.01" placeholder="Accesorios">
+                        </div>
+                    </div>
+
+                   <div>
+                        <label class="block text-sm font-semibold text-gray-600">Frecuencia de Pago</label>
+                        <select id="frecuencia" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-purple-100">
+                            <option value="1">Mensual</option>
+                            <option value="2">Quincenal</option>  
+                           <option value="4">Semanal</option>    
+                        </select>
+                    </div>
+
+                     <div>
+                        <label class="block text-sm font-semibold text-gray-600">Plazo (Meses)</label>
+                        <input type="number" id="plazo" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-orange-50" value="6">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600">Sistema de Amortización</label>
+                        <select id="sistema" class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-rose-100">
+                            <option value="simple">Simple (Sobre Capital)</option>    
+                            <!--  <option value="frances">Francés (Cuota Fija)</option>  -->
+                        </select>
+                    </div>
+
+                <!--oculte el boton calcular
+                
+                <button onclick="calcular()" class="w-full bg-[#0164fe] hover:bg-[#0152d1] text-white font-bold py-3 rounded-lg transition shadow-lg">
+                <i class="bi bi-calculator me-2"></i> CALCULAR 
+                    </button>
+
+                    -->
+                </div>
+            </div>
+
+            <!-- RESULTADOS Y CRONOGRAMA -->
+            <div class="lg:col-span-2 space-y-6">
+
             
-            // Si el navegador lo permite, intentamos cerrar la pestaña para dejar al usuario dentro de la app que parpadeó
-            window.close();
+                <!-- RESUMEN RÁPIDO -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+
+    <!-- Precio Producto -->
+    <div class="card p-4 text-center border-t-4 border-emerald-500 bg-emerald-50">
+        <p class="text-emerald-700 text-xs font-bold uppercase">Precio del Producto</p>
+        <h3 id="res-producto" class="text-2xl font-bold text-emerald-700">RD$0.00</h3>
+    </div>
+    
+    <!-- Inicial -->
+    <div class="card p-4 text-center border-t-4 border-blue-500 bg-blue-50">
+        <p class="text-blue-700 text-xs font-bold uppercase">Inicial</p>
+        <h3 id="res-inicial" class="text-2xl font-bold text-blue-700">RD$0.00</h3>
+    </div>
+
+    <!-- Accesorios -->
+    <div class="card p-4 text-center border-t-4 border-rose-500 bg-rose-50">
+        <p class="text-rose-700 text-xs font-bold uppercase">Accesorios</p>
+        <h3 id="res-accesorios" class="text-2xl font-bold text-rose-700">RD$0.00</h3>
+    </div>
+
+    <!-- Monto financiado -->
+    <div class="card p-4 text-center border-t-4 border-purple-500 bg-purple-50">
+        <p class="text-purple-700 text-xs font-bold uppercase">Monto Financiado</p>
+        <h3 id="res-financiar" class="text-2xl font-bold text-purple-700">RD$0.00</h3>
+    </div>
+
+    <!-- Cuota -->
+    <div class="card p-4 text-center border-t-4 border-orange-500 bg-orange-50">
+        <p class="text-orange-700 text-xs font-bold uppercase">Cuota Fija</p>
+        <h3 id="res-cuota" class="text-2xl font-bold text-orange-700">RD$0.00</h3>
+    </div>
+
+    <!-- Cantidad cuotas -->
+    <div class="card p-4 text-center border-t-4 border-amber-800 bg-amber-50">
+        <p class="text-amber-900 text-xs font-bold uppercase">Cantidad de Cuotas</p>
+        <h3 id="res-cuotas" class="text-2xl font-bold text-amber-900">0</h3>
+    </div>
+
+    <!-- Intereses -->
+    <div class="card p-4 text-center border-t-4 border-yellow-400 bg-yellow-50">
+        <p class="text-yellow-700 text-xs font-bold uppercase">Total Intereses</p>
+        <h3 id="res-interes" class="text-2xl font-bold text-yellow-700">RD$0.00</h3>
+    </div>
+
+    <!-- Total -->
+    <div class="card p-4 text-center border-t-4 border-gray-500 bg-gray-100">
+        <p class="text-gray-700 text-xs font-bold uppercase">Total a Pagar</p>
+        <h3 id="res-total" class="text-2xl font-bold text-gray-800">RD$0.00</h3>
+    </div>
+
+</div>
+
+<div class="mt-4 rounded-xl border border-gray-200 bg-white shadow-sm p-4 no-print">
+    <div class="flex items-center justify-between mb-2">
+        <h3 class="text-sm md:text-base font-semibold text-gray-700">
+            Vista previa del mensaje
+        </h3>
+
+        <button
+            type="button"
+            id="copiar-preview"
+            class="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition">
+            Copiar
+        </button>
+    </div>
+
+    <textarea
+        id="preview-whatsapp"
+        readonly
+        class="w-full min-h-[300px] rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-700 leading-6 outline-none resize-y"></textarea>
+</div>
+
+
+                <!-- TABLA -->
+                <div class="card overflow-hidden">
+                    <div class="p-1 bg-gray-5000 border-b flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+<!--   <h2 class="font-bold text-gray-700"><i class="bi bi-table me-2"></i>Tabla de Amortización</h2> -->
+<!--                   
+    <div class="flex flex-col sm:flex-row gap-2 no-print w-full md:w-auto">
+    <button onclick="window.print()" 
+    class="w-full sm:w-auto text-sm bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg font-bold transition">
+    <i class="bi bi-printer me-1"></i> Imprimir
+    </button>
+
+    <button onclick="copiarWhatsApp()" 
+    class="w-full sm:w-auto text-sm bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold transition">
+    <i class="bi bi-whatsapp me-1"></i> WhatsApp
+    </button>
+    </div>
+-->
+    
+<div class="w-full md:w-64 mx-auto flex flex-col items-center">
+
+    <div class="relative mt-1 w-full">
+        <span class="absolute left-3 top-2 text-gray-400">
+            <i class="bi bi-whatsapp"></i>
+        </span>
+
+        <input type="tel" id="telefono_cliente"
+            class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-center no-print bg-green-200"
+            placeholder="ej. 8091234567">
+    </div>
+
+    <div class="text-[10px] text-gray-500 mt-1 text-center no-print">
+        Incluya el código de área sin el signo +1 y sin guiones
+    </div>
+
+    
+    <div class="flex justify-center gap-2 mt-4">
+    <button onclick="copiarWhatsApp()" 
+        class="text-sm bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold transition flex items-center no-print">
+        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+    </button>
+    
+    <button onclick="window.print()" 
+        class="text-sm bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg font-bold transition flex items-center no-print">
+        <i class="bi bi-printer me-1"></i> Imprimir
+    </button>
+    </div>
+
+</div>
+
+</div>
+
+
+
+<!-- 
+<div class="card overflow-hidden">
+<h2 class="font-bold text-gray-700"><i class="bi bi-table me-2"></i>Tabla de Amortización</h2>
+
+                    
+                    <!-- Eliminado max-h para que crezca hacia abajo sin scroll -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center text-xs">
+                            <thead class="bg-gray-100 shadow-sm">
+                                <tr>
+                                    <th class="px-4 py-3 font-bold text-gray-600 uppercase text-center ">#</th>
+                                    <th class="px-4 py-3 font-bold text-gray-600 uppercase text-center ">Cuota</th>
+                                    <th class="px-4 py-3 font-bold text-gray-600 uppercase text-center ">Interés</th>
+                                    <th class="px-4 py-3 font-bold text-gray-600 uppercase text-center ">Capital</th>
+                                    <th class="px-4 py-3 font-bold text-gray-600 uppercase text-center ">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-body" class="divide-y divide-gray-100">
+                                <!-- JS llenará esto -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        });
+
+
+// ===============================
+// 🔥 AQUI EMPIEZA TODO RAYMOND
+// ===============================
+document.addEventListener('DOMContentLoaded', function () {
+
+    cargarProductos();
+    inicializarEventos();
+    inicializarEnter();
+    activarDropdown();
+    inicializarPreviewWhatsApp();
+
+    const esPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (esPWA) {
+        const btn = document.getElementById('btnActualizar');
+        if (btn) {
+            btn.classList.remove('hidden');
         }
-    }, 1500);
+    }
+
+    calcular();
+});
+
+// ===============================
+// 🔥 VARIABLES GLOBALES
+// ===============================
+let productos = [];
+let indiceActivo = -1;
+
+
+// ===============================
+// 🔥 ENFOCAR INPUT (SIN ABRIR DROPDOWN)
+// ===============================
+function enfocarProductoInicial() {
+    const input = document.getElementById('nombre_producto');
+    if (!input) return;
+
+    setTimeout(() => {
+        input.focus();
+        input.select();
+    }, 80);
 }
-</script>
+
+// ===============================
+// 🔥 CARGAR PRODUCTOS (CACHE + FETCH)
+// ===============================
+// ===============================
+// 🔥 CARGAR PRODUCTOS (CACHE + EXPIRACIÓN + FETCH)
+// ===============================
+function cargarProductos() {
+
+    const CACHE_KEY = 'productos';
+    const CACHE_TIME_KEY = 'productos_time';
+    const EXPIRACION = 1000 * 60 * 1; // 10 minutos
+
+    const cache = localStorage.getItem(CACHE_KEY);
+    const cacheTime = Number(localStorage.getItem(CACHE_TIME_KEY) || 0);
+    const ahora = Date.now();
+
+    // 🔥 1. cargar cache rápido
+    if (cache) {
+        try {
+            productos = JSON.parse(cache) || [];
+        } catch (e) {
+            productos = [];
+        }
+    }
+
+    // 🔥 2. enfocar input (sin abrir dropdown)
+    setTimeout(() => {
+        enfocarProductoInicial();
+    }, 80);
+
+    // 🔥 3. si cache aún válido, no consultar Sheets
+    if (cache && cacheTime && (ahora - cacheTime < EXPIRACION)) {
+        console.log('⚡ Productos desde cache');
+        return;
+    }
+
+    // 🔥 4. actualizar desde Sheets
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSWaRFQ7at60liEuEBqUPbHstZ3xyoygWpzJ1-V_XG4loTeDGztXJtfx-TiMZdUyrg7wSFsoimiiZQb/pub?output=csv')
+        .then(res => res.text())
+        .then(data => {
+
+            const lineas = data.split('\n').filter(l => l.trim());
+            lineas.shift();
+
+            const usados = new Set();
+            const nuevosProductos = [];
+
+            lineas.forEach(fila => {
+
+                const columnas = fila.split(',');
+
+                const nombre = (columnas[0] || '').trim();
+                const precioRaw = (columnas[1] || '').trim();
+
+                if (!nombre) return;
+
+                const key = nombre.toLowerCase();
+
+                if (usados.has(key)) return;
+                usados.add(key);
+
+                nuevosProductos.push({
+                    nombre,
+                    precio: precioRaw ? Number(precioRaw) || 0 : 0
+                });
+            });
+
+            // 🔥 reemplazar productos completamente
+            productos = nuevosProductos;
+
+            localStorage.setItem(CACHE_KEY, JSON.stringify(nuevosProductos));
+            localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+
+            console.log('🔄 Productos actualizados desde Sheets');
+        })
+        .catch(err => {
+            console.error('❌ Error cargando productos:', err);
+        });
+}
+
+// ===============================
+// 🔥 ACTUALIZAR INICIAL
+// ===============================
+function actualizarInicial() {
+    const monto = parseFloat(document.getElementById('monto').value) || 0;
+    const inicial = document.getElementById('inicial');
+
+    if (inicial) {
+        inicial.value = (monto * 0.30).toFixed(2);
+    }
+}
+
+
+// ===============================
+// 🔥 EVENTOS GENERALES
+// ===============================
+function inicializarEventos() {
+
+    const campos = ['monto','inicial','tasa','plazo','frecuencia','accesorios','sistema'];
+
+    campos.forEach(id => {
+
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const evento = el.tagName === 'SELECT' ? 'change' : 'input';
+
+        el.addEventListener(evento, function () {
+
+            if (id === 'monto') {
+                actualizarInicial();
+            }
+
+            calcular();
+        });
+    });
+
+    const check = document.getElementById('checkLicencia');
+    const contenedor = document.getElementById('contenedorLicencia');
+
+    if (check) {
+        check.addEventListener('change', function () {
+
+            if (contenedor) {
+                contenedor.classList.toggle('hidden', !this.checked);
+            }
+
+            calcular();
+        });
+    }
+}
+
+
+// ===============================
+// 🔥 DROPDOWN PRO
+// ===============================
+function activarDropdown() {
+
+    const input = document.getElementById('nombre_producto');
+    if (!input) return;
+
+    let dropdown = document.createElement('div');
+    dropdown.className = 'dropdown-productos';
+
+    Object.assign(dropdown.style, {
+        position: 'absolute',
+        background: '#fff',
+        border: '1px solid #ddd',
+        borderRadius: '10px',
+        width: '600px',
+        maxHeight: '350px',
+        overflowY: 'auto',
+        zIndex: '9999',
+        display: 'none',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+        fontSize: '14px'
+    });
+
+    input.parentNode.appendChild(dropdown);
+
+    // ===============================
+    // 🔥 RENDER
+    // ===============================
+    function render(valor = '') {
+
+        dropdown.innerHTML = '';
+        indiceActivo = -1;
+
+    const texto = valor.toLowerCase().trim();
+    const palabras = texto.split(/\s+/).filter(Boolean);
+
+    const filtrados = productos.filter(p => {
+    const nombre = p.nombre.toLowerCase();
+
+    return palabras.every(palabra => nombre.includes(palabra));
+});
+
+        filtrados.forEach((p, index) => {
+
+            const item = document.createElement('div');
+
+            item.innerText = (p.precio && !isNaN(p.precio))
+                ? `${p.nombre} - $${p.precio}`
+                : p.nombre;
+
+            Object.assign(item.style, {
+                padding: '10px 14px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+            });
+
+            item.addEventListener('mouseenter', () => {
+                indiceActivo = index;
+                actualizarHighlight();
+            });
+
+            item.addEventListener('click', () => seleccionarProducto(p));
+
+            dropdown.appendChild(item);
+        });
+
+        dropdown.style.display = filtrados.length ? 'block' : 'none';
+    }
+
+    // ===============================
+    // 🔥 HIGHLIGHT
+    // ===============================
+    function actualizarHighlight() {
+        Array.from(dropdown.children).forEach((item, i) => {
+            item.style.background = i === indiceActivo ? '#2563eb' : '#fff';
+            item.style.color = i === indiceActivo ? '#fff' : '#000';
+        });
+    }
+
+    // ===============================
+    // 🔥 SCROLL AUTO
+    // ===============================
+    function scrollToActivo() {
+        const item = dropdown.children[indiceActivo];
+        if (!item) return;
+
+        item.scrollIntoView({
+            block: 'nearest',
+            behavior: 'smooth'
+        });
+    }
+
+    // ===============================
+    // 🔥 INPUT
+    // ===============================
+    input.addEventListener('input', function () {
+        render(this.value);
+    });
+
+    // 🔥 clic sí abre dropdown
+    input.addEventListener('click', function () {
+        render(this.value);
+    });
+
+    // ===============================
+    // 🔥 TECLADO
+    // ===============================
+    input.addEventListener('keydown', function (e) {
+
+        const items = dropdown.children;
+
+        if (e.key === ' ') {
+            render(input.value);
+        }
+
+        if (e.key === 'ArrowDown') {
+            if (dropdown.style.display === 'none') {
+                render(input.value);
+                return;
+            }
+
+            e.preventDefault();
+
+            indiceActivo = Math.min(indiceActivo + 1, items.length - 1);
+            actualizarHighlight();
+            scrollToActivo();
+        }
+
+        if (e.key === 'ArrowUp') {
+            if (dropdown.style.display === 'none') return;
+
+            e.preventDefault();
+
+            indiceActivo = Math.max(indiceActivo - 1, 0);
+            actualizarHighlight();
+            scrollToActivo();
+        }
+
+        if (e.key === 'Enter') {
+            if (dropdown.style.display === 'none') return;
+
+            e.preventDefault();
+
+            if (items[indiceActivo]) {
+                const nombre = items[indiceActivo].innerText.split(' - ')[0];
+                const producto = productos.find(p => p.nombre === nombre);
+
+                if (producto) {
+                    seleccionarProducto(producto);
+                }
+            }
+        }
+    });
+
+    // ===============================
+    // 🔥 CERRAR
+    // ===============================
+    document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== input) {
+            dropdown.style.display = 'none';
+        }
+    });
+}
+
+
+// ===============================
+// 🔥 HIGHLIGHT
+// ===============================
+function actualizarHighlight(dropdown) {
+
+    const items = dropdown.children;
+
+    Array.from(items).forEach((item, i) => {
+        item.style.background = i === indiceActivo ? '#2563eb' : '#fff';
+        item.style.color = i === indiceActivo ? '#fff' : '#000';
+    });
+}
+
+
+// ===============================
+// 🔥 SCROLL AUTO
+// ===============================
+function scrollToActivo(dropdown) {
+
+    const item = dropdown.children[indiceActivo];
+    if (!item) return;
+
+    item.scrollIntoView({ block: 'nearest' });
+}
+
+
+// ===============================
+// 🔥 SELECCIONAR PRODUCTO
+// ===============================
+function seleccionarProducto(producto) {
+
+    const input = document.getElementById('nombre_producto');
+    const monto = document.getElementById('monto');
+
+    input.value = producto.nombre;
+    monto.value = producto.precio;
+
+    actualizarInicial();
+    calcular();
+
+    document.querySelector('.dropdown-productos').style.display = 'none';
+
+    monto.focus();
+    monto.select();
+}
+
+
+// ===============================
+// 🔥 ENTER NAVEGACIÓN
+// ===============================
+function inicializarEnter() {
+
+    const orden = [
+        'nombre_producto',
+        'monto',
+        'inicial',
+        'tasa',
+        'accesorios',
+        'plazo',
+        'frecuencia',
+        'telefono_cliente'
+    ];
+
+    orden.forEach((id, index) => {
+
+        const campo = document.getElementById(id);
+        if (!campo) return;
+
+        campo.addEventListener('keydown', function (e) {
+
+            if (e.key !== 'Enter') return;
+
+            e.preventDefault();
+
+            const siguienteId = orden[index + 1];
+
+            if (siguienteId) {
+                const siguiente = document.getElementById(siguienteId);
+
+                if (siguiente) {
+                    siguiente.focus();
+                    if (typeof siguiente.select === 'function') siguiente.select();
+                }
+            } else {
+                copiarWhatsApp();
+            }
+        });
+    });
+}
+
+
+// ===============================
+// 🔥 CALCULAR 
+// ===============================
+function calcular() {
+
+    const montoBase = Number(document.getElementById('monto').value) || 0;
+    const inicial = Number(document.getElementById('inicial').value) || 0;
+    const accesorios = Number(document.getElementById('accesorios').value) || 0;
+
+    const licenciaExtra = document.getElementById('checkLicencia')?.checked ? 500 : 0;
+    const precioFinalProducto = montoBase + licenciaExtra;
+
+    if (inicial > precioFinalProducto) {
+    mostrarError('⚠️ El pago inicial no puede ser mayor al precio del producto');
+    return;
+}
+
+    if (accesorios > precioFinalProducto) {
+    mostrarError('⚠️ Los accesorios no pueden superar el precio del producto');
+    return;
+}
+
+function mostrarError(msg) {
+    document.getElementById('tabla-body').innerHTML = `
+        <tr>
+            <td colspan="5" class="text-center text-red-500 font-bold">
+                ${msg}
+            </td>
+        </tr>`;
+}
+
+    const tasaMensual = Number(document.getElementById('tasa').value) / 100;
+    const mesesPlazo = Number(document.getElementById('plazo').value) || 0;
+    const frecuenciaFactor = Number(document.getElementById('frecuencia').value);
+    const sistema = document.getElementById('sistema').value;
+
+    const capitalAFinanciar = (precioFinalProducto + accesorios) - inicial;
+
+    const numeroPagos = mesesPlazo * frecuenciaFactor;
+    const tasaPeriodica = tasaMensual / frecuenciaFactor;
+
+    const frecTxt = document.getElementById('frecuencia').selectedOptions[0].text;
+    const textoCuotas = `${numeroPagos} (${frecTxt})`;
+
+    if (capitalAFinanciar <= 0 || numeroPagos <= 0) return;
+
+    const f = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+    let cuotaBase = sistema === 'frances'
+        ? (capitalAFinanciar * tasaPeriodica) / (1 - Math.pow(1 + tasaPeriodica, -numeroPagos))
+        : (capitalAFinanciar / numeroPagos) + (capitalAFinanciar * tasaPeriodica);
+
+    const cuotaFija = Math.round(cuotaBase);
+
+    let saldo = capitalAFinanciar;
+    let totalInteres = 0;
+    let totalPagos = 0;
+    let filasHtml = '';
+
+    for (let i = 1; i <= numeroPagos; i++) {
+
+        const interesPagar = sistema === 'frances'
+            ? saldo * tasaPeriodica
+            : capitalAFinanciar * tasaPeriodica;
+
+        let capitalPagar = cuotaFija - interesPagar;
+
+        if (i === numeroPagos) {
+            capitalPagar = saldo;
+        }
+
+        saldo -= capitalPagar;
+        totalInteres += interesPagar;
+        totalPagos += cuotaFija;
+
+
+// tabla de calculo
+filasHtml += `
+<tr class="hover:bg-blue-50 transition-colors text-xs md:text-sm">
+    <td class="px-3 md:px-4 py-2 md:py-3 font-semibold text-black-400 text-center">
+        ${i}
+    </td>
+
+    <td class="px-3 md:px-4 py-2 md:py-3 font-bold text-blue-600 text-center">
+        ${f.format(cuotaFija)}
+    </td>
+
+    <td class="px-3 md:px-4 py-2 md:py-3 text-rose-500 font-medium text-center">
+        ${f.format(interesPagar)}
+    </td>
+
+    <td class="px-3 md:px-4 py-2 md:py-3 text-emerald-600 font-medium text-center">
+        ${f.format(capitalPagar)}
+    </td>
+
+    <td class="px-3 md:px-4 py-2 md:py-3 font-bold text-gray-700 text-center">
+        ${f.format(Math.max(0, saldo))}
+    </td>
+</tr>
+`;
+}
+
+
+    const totalFinal = totalPagos + inicial;
+
+    document.getElementById('tabla-body').innerHTML = filasHtml;
+
+    document.getElementById('res-cuota').innerText = f.format(cuotaFija);
+    document.getElementById('res-financiar').innerText = f.format(capitalAFinanciar);
+    document.getElementById('res-interes').innerText = f.format(totalInteres);
+    document.getElementById('res-total').innerText = f.format(totalFinal);
+
+    document.getElementById('res-producto').innerText = f.format(precioFinalProducto);
+    document.getElementById('res-inicial').innerText = f.format(inicial);
+    document.getElementById('res-accesorios').innerText = f.format(accesorios);
+    document.getElementById('res-cuotas').innerText = textoCuotas;
+
+        // 🔥 INPUT OPCIONAL
+    const inputLic = document.getElementById('precioConLicencia');
+    if (inputLic) {
+        inputLic.value = precioFinalProducto.toFixed(2);
+    }
+
+    actualizarPreviewWhatsApp();
+
+}
+
+
+// ===============================
+// 🔥 GENERAR TEXTO WHATSAPP
+// ===============================
+function generarTextoWhatsApp() {
+
+    const f = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+    });
+
+    const montoBase = Number(document.getElementById('monto').value) || 0;
+    const licenciaActiva = document.getElementById('checkLicencia')?.checked;
+    const licenciaExtra = licenciaActiva ? 500 : 0;
+
+    const precioFinalProducto = montoBase + licenciaExtra;
+
+    const meses = Number(document.getElementById('plazo').value) || 0;
+    const frecuenciaFactor = Number(document.getElementById('frecuencia').value);
+    const numeroCuotas = meses * frecuenciaFactor;
+
+    const frecTxt =
+        document.getElementById('frecuencia').selectedOptions[0].text;
+
+    const precioProducto = f.format(precioFinalProducto);
+    const inicial =
+        f.format(Number(document.getElementById('inicial').value) || 0);
+
+    const financiado =
+        document.getElementById('res-financiar').innerText || '0.00';
+
+    const accesorios =
+        f.format(Number(document.getElementById('accesorios').value) || 0);
+
+    const cuota =
+        document.getElementById('res-cuota').innerText || '0.00';
+
+    const total =
+        document.getElementById('res-total').innerText || '0.00';
+
+    const textoCuotas =
+        `${numeroCuotas} cuota${numeroCuotas > 1 ? 's' : ''} (${frecTxt})`;
+
+    const nombreProducto =
+        document.getElementById('nombre_producto')?.value || 'Producto';
+
+    return `RESUMEN DEL FINANCIAMIENTO CREDIPAY
+-----------------------------------
+📱 *Producto:* ${nombreProducto.toUpperCase()}
+💲 *Precio del Producto:* RD$${precioProducto}
+💵 *Inicial:* RD$${inicial}
+👜 *Accesorios:* RD$${accesorios}
+💰 *Monto a Prestar:* RD$${financiado}
+📆 *Plazo del Financiamiento:* ${meses} Meses
+💸 *Cuota Fija:* RD$${cuota}
+🧮 *Cantidad de Cuotas:* ${textoCuotas}
+🤝 *Total a Pagar:* RD$${total}
+-----------------------------------
+
+*¡Continúe su proceso ahora!*
+Complete su solicitud en el siguiente enlace:
+https://solicitud.prestamoscloud.com/solicitudes/i/credipay-
+
+Nuestros representantes le contactarán en un plazo de *24 a 72 horas*.`;
+}
+
+
+// ===============================
+// 🔥 PREVIEW DEL MENSAJE
+// ===============================
+function actualizarPreviewWhatsApp() {
+
+    const textarea = document.getElementById('preview-whatsapp');
+    if (!textarea) return;
+
+    textarea.value = generarTextoWhatsApp();
+}
+
+
+// ===============================
+// 🔥 COPIAR TEXTO PREVIEW
+// ===============================
+document.addEventListener('DOMContentLoaded', function () {
+
+    const btn = document.getElementById('copiar-preview');
+    const textarea = document.getElementById('preview-whatsapp');
+
+    if (!btn || !textarea) return;
+
+    btn.addEventListener('click', async function () {
+
+        const texto = textarea.value || '';
+        if (!texto) return;
+
+        let copiado = false;
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(texto);
+                copiado = true;
+            }
+        } catch (e) {}
+
+        if (!copiado) {
+            textarea.removeAttribute('readonly');
+            textarea.focus();
+            textarea.select();
+            textarea.setSelectionRange(0, 999999);
+
+            try {
+                copiado = document.execCommand('copy');
+            } catch (e) {}
+
+            textarea.setAttribute('readonly', true);
+        }
+
+           if (copiado) {
+            const originalText = btn.innerText;
+            const originalClasses = btn.className; // Guarda el diseño original
+
+            btn.innerText = 'Copiado';
+            
+            // Esto elimina el azul y pone verde (usando !important con Tailwind si fuera necesario)
+            btn.style.backgroundColor = '#22c55e'; // Color verde (green-500)
+            btn.style.borderColor = '#16a34a';     // Borde verde (green-600)
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                // Limpia los estilos manuales para que vuelva a su CSS original
+                btn.style.backgroundColor = '';
+                btn.style.borderColor = '';
+            }, 1200);
+        }
+    });
+});
+
+// ===============================
+// 🔥 WHATSAPP
+// ===============================
+function copiarWhatsApp() {
+
+    const inputTelef = document.getElementById('telefono_cliente');
+    let numero = (inputTelef.value || '').replace(/\D/g, '');
+
+    if (numero.length === 10) {
+        numero = '1' + numero;
+    }
+
+    const texto = generarTextoWhatsApp();
+    const mensaje = encodeURIComponent(texto);
+
+    const esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (esMovil) {
+
+        const urlApp = `whatsapp://send?phone=${numero}&text=${mensaje}`;
+        const urlWeb = `https://wa.me/${numero}?text=${mensaje}`;
+
+        window.location.href = urlApp;
+
+        setTimeout(() => {
+            window.location.href = urlWeb;
+        }, 1200);
+
+    } else {
+
+        const urlPC =
+            `https://web.whatsapp.com/send?phone=${numero}&text=${mensaje}`;
+
+        window.open(urlPC, 'WhatsAppWindow');
+    }
+}
+
+
+window.onload = function () {
+    calcular();
+    actualizarPreviewWhatsApp();
+};
+        
+    </script>
+
+
 
 </body>
 </html>
